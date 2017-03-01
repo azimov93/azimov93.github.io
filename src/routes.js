@@ -4,7 +4,5 @@ import App from './App';
 
 export default (
     <Route component={App} path='/'>
-        {/*<IndexRoute component={Calendar} />*/}
-        {/*<Route component={Clients} path='clients' />*/}
     </Route>
 );

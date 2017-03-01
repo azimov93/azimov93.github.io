@@ -6,7 +6,6 @@ import rootReducer from './rootReducer';
 import { Provider } from 'react-redux';
 import { browserHistory, Router } from 'react-router';
 import routes from './routes';
-import './index.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -16,9 +15,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={browserHistory}>
-            {routes}
-        </Router>
+        <Router history={browserHistory} routes={routes} />
     </Provider>,
-  document.getElementById('root')
+  document.getElementById('app')
 );

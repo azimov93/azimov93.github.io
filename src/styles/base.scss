@@ -1,0 +1,26 @@
+@import 'variables';
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,200,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:300');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $primary;
+  background-color: $light-theme-bg-color;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+

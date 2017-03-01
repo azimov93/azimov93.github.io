@@ -1,0 +1,42 @@
+.wrap {
+  width: 200px;
+  height: 100vh;
+  display: inline-block;
+  background: #45496b;
+  margin: 0;
+  padding: 0;
+}
+
+.avatar {
+  border: 1px solid #595d83;
+  width: 71px;
+  height: 71px;
+  border-radius: 100%;
+  display: block;
+  margin: 20px auto 0;
+}
+
+.image {
+  width: 65px;
+  height: 65px;
+  margin: 2px;
+}
+
+.buttons {
+  width: 83px;
+  margin: 11px 59px;
+}
+
+.button {
+  display: inline-block;
+  background: #595d83;
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  text-align: center;
+}
+
+.logout {
+  float: right;
+}
+
