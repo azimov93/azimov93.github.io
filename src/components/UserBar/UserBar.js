@@ -4,6 +4,8 @@ import styles from './UserBar.scss';
 import avatar from './avatar.png';
 import settings from './settings.svg';
 import logout from './logout.svg';
+import list from './list.svg';
+import person from './person.svg';
 
 
 export default () => {
@@ -22,10 +24,10 @@ export default () => {
             </div>
             <ul className={styles.menu}>
                 <li className={styles.item}>
-                    <Link className={styles.link} to="/shedule">Shedule</Link>
+                    <Link className={styles.link} to="/"><img className={styles.logos} src={list}/>Schedule</Link>
                 </li>
                 <li className={styles.item}>
-                    <Link className={styles.link} to="/clients">Clients</Link>
+                    <Link className={styles.link} to="/clients"><img className={styles.logos} src={person}/>My clients</Link>
                 </li>
             </ul>
         </div>

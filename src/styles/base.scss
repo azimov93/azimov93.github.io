@@ -1,6 +1,5 @@
 @import 'variables';
-@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,200,700');
-@import url('https://fonts.googleapis.com/css?family=Raleway:300');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 * {
   box-sizing: border-box;
@@ -12,6 +11,7 @@ body {
   font-family: $primary;
   background-color: $light-theme-bg-color;
   overflow: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .container {

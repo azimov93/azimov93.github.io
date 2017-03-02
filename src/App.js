@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import UserBar from './components/UserBar/UserBar';
+import UserBar from './components/UserBar';
 import './styles/index.scss';
 
 class App extends Component {
