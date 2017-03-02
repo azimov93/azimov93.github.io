@@ -67,10 +67,18 @@
     -webkit-box-shadow:inset 3px 0px 0px 0px #f6cf31;
     -moz-box-shadow:inset 3px 0px 0px 0px #f6cf31;
     box-shadow:inset 3px 0px 0px 0px #f6cf31;
-    text-decoration: none;
     opacity: 1;
     color: #ffffff;
   }
+}
+
+.active {
+  background: rgba(255,255,255,0.15);
+  -webkit-box-shadow:inset 3px 0px 0px 0px #f6cf31;
+  -moz-box-shadow:inset 3px 0px 0px 0px #f6cf31;
+  box-shadow:inset 3px 0px 0px 0px #f6cf31;
+  opacity: 1;
+  color: #ffffff;
 }
 
 .logos {

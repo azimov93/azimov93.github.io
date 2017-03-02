@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import dates from './reducers/dates';
+import meets from './reducers/meets';
 
 export default combineReducers({
-    dates
+    meets
 })

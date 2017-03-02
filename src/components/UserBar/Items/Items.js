@@ -11,12 +11,12 @@ class Items extends Component {
             <ul className={styles.menu}>
                 {this.props.item.map(item =>
                     <li key={item.name} className={styles.item}>
-                        <Link className={styles.link} to={item.link}><img className={styles.logos} src={item.image}/>{item.name}</Link>
+                        <Link activeClassName={styles.active} className={styles.link} to={item.link}><img className={styles.logos} src={item.image}/>{item.name}</Link>
                     </li>
                 )}
             </ul>
         )
     }
-};
+}
 
 export default Items;

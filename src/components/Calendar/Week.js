@@ -18,7 +18,7 @@ class Week extends Component {
             days.push(
                 <span
                     key={day.date.toString()}
-                    className={"day" + (day.isToday ? " today" : "") + (day.isCurrentMonth ? "" : " different-month") + (day.date.isSame(this.props.selected) ? " selected" : "")}
+                    className={`${styles.day}` + (day.isToday ? ` ${styles.today}` : ``) + (day.isCurrentMonth ? `` : ` ${styles.diffMonth}`) + (day.date.isSame(this.props.selected) ? ` ${styles.selected}` : ``)}
                     onClick={this.props.select.bind(null, day)}
                 >
                     {day.number}

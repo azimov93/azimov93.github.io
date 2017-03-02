@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Items from './Items';
 import styles from './UserBar.scss';
-import avatar from './avatar.png';
-import settings from './settings.svg';
-import logout from './logout.svg';
-import list from './list.svg';
-import person from './person.svg';
+import avatar from './assets/avatar.png';
+import settings from './assets/settings.svg';
+import logout from './assets/logout.svg';
+import list from './assets/list.svg';
+import person from './assets/person.svg';
 
 
 class UserBar extends Component{
