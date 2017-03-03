@@ -12,7 +12,7 @@ class UserBar extends Component{
     state = {
         links: [
             {
-                link: '/',
+                link: '/cal',
                 image: list,
                 name: 'Schedule'
             },

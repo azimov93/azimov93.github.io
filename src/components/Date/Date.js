@@ -1,32 +1,34 @@
 import React, { Component } from 'react';
 import styles from './Date.scss';
+import { Link } from 'react-router';
 import { getData } from '../../actions/actionsDate';
 import { connect } from 'react-redux';
 import MeetList from './MeetList';
 
 class Date extends Component {
     constructor(props) {
-        super(props)
+        super(props);
     }
     componentDidMount = () => {
-        this.props.getData(this.props.data)
+        this.props.getData(this.props.data);
     };
     render() {
-        const data = this.props.meets[this.props.data];
         return (
             <div className={styles.wrap}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>
                         {this.props.selected.format("MMMM DD")}
                     </h1>
-                    <button
+                    <Link
+                        to={`/cal/${this.props.data}/new`}
                         type="submit"
                         name="save"
                         className={`${styles.button} ${styles.create}`}
                     >
                         CREATE
-                    </button>
-                    {JSON.stringify(data)}
+                    </Link>
+                    <MeetList data={this.props.meets} date={this.props.data} />
+                    {JSON.stringify(this.props.meets)}
                 </div>
             </div>
         )
@@ -35,7 +37,7 @@ class Date extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        meets: state.meets
+        meets: state.meets,
     }
 };
 

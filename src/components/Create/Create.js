@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from './Create.scss';
-import { setData } from '../../actions/actionsDate';
+import { setData, getData } from '../../actions/actionsDate';
 import { connect } from 'react-redux';
 import close from './assets/close.svg';
 
@@ -9,7 +9,7 @@ class Create extends Component {
     //     this.props.setData()
     // };
     state = {
-        id: this.props.selected.format("DD_MMMM_YYYY"),
+        id: this.props.data,
         name: '',
         description: '',
         errors: {}
@@ -50,7 +50,7 @@ class Create extends Component {
             <div className={styles.wrap}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>
-                        New meeting on {this.props.selected.format("MMMM DD")}
+                        New meeting on {this.props.selected.format('MMMM DD')}
                     </h1>
                     <img className={styles.close} src={close} />
                 </div>
@@ -62,10 +62,10 @@ class Create extends Component {
                             </label>
                             <input
                                 className={`${styles.input}` + (this.state.errors.name ? ` ${styles.error}` : ``)}
-                                name="name"
+                                name='name'
                                 value={this.state.value}
                                 onChange={this.handleChange}
-                                placeholder="Name" />
+                                placeholder='Name' />
                             { this.state.errors.name && <span className={styles.errorMessage}>{this.state.errors.name}</span> }
                         </div>
                         <div className={styles.line}>
@@ -74,23 +74,23 @@ class Create extends Component {
                             </label>
                             <textarea
                                 className={`${styles.message}` + (this.state.errors.description ? ` ${styles.error}` : ``)}
-                                name="description"
+                                name='description'
                                 value={this.state.value}
                                 onChange={this.handleChange}
-                                placeholder="Meeting description" />
+                                placeholder='Meeting description' />
                             { this.state.errors.description && <span className={styles.errorMessage}>{this.state.errors.description}</span> }
                         </div>
                         <div className={styles.buttons}>
                             <button
-                                type="reset"
-                                name="cancel"
+                                type='reset'
+                                name='cancel'
                                 className={`${styles.button} ${styles.cancel}`}
                             >
                                 CANCEL
                             </button>
                             <button
-                                type="submit"
-                                name="save"
+                                type='submit'
+                                name='save'
                                 className={`${styles.button} ${styles.save}`}
                             >
                                 SAVE
@@ -103,4 +103,4 @@ class Create extends Component {
     };
 }
 
-export default connect(null, { setData })(Create);
+export default connect(null, { setData, getData })(Create);

@@ -6,15 +6,15 @@ import deleteIcon from './deleteIcon.svg';
 export const MeetList = (props) => {
     return(
         <ul className={styles.wrap}>
-            {props.data.map(meet =>
-                <li className={styles.item}>
+            {props.data[props.date].map(meet =>
+                <li key={meet.id} className={styles.item}>
                     <div className={styles.info}>
                         <p className={styles.desc}>{meet.description}</p>
                         <span className={styles.name}>{meet.name}</span>
                     </div>
                     <div className={styles.buttons}>
                         <img className={styles.icon} src={editIcon}/>
-                        <img className={styles.icon} src={deleteIcon}/>
+                        <img key={meet.id} className={styles.icon} src={deleteIcon}/>
                     </div>
                 </li>
             )}

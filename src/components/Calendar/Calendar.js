@@ -3,16 +3,15 @@ import styles from './Calendar.scss';
 import DayNames from './DayNames';
 import Week from './Week';
 import arrow from './assets/arrow.svg';
-import Date from '../Date';
-import Create from '../Create';
+import moment from 'moment';
 
 class Calendar extends Component {
     constructor(props) {
         super(props)
     };
     state =  {
-        month: this.props.selected.clone(),
-        selected: this.props.today,
+        month: moment().startOf("day").clone(),
+        selected: moment().startOf("day"),
     };
     previous = () => {
         const month = this.state.month;
@@ -42,7 +41,13 @@ class Calendar extends Component {
                     <DayNames />
                     {this.renderWeeks()}
                 </div>
-                <Date selected={this.state.selected} data={this.state.selected.format("DD_MMMM_YYYY")}/>
+                {React.Children.map(this.props.children, (child) =>
+                    React.cloneElement(child,
+                    {
+                        selected: this.state.selected,
+                        data: this.state.selected.format('DDMMMYY'),
+                    }))
+                }
             </div>
         );
     }
