@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import styles from './MeetList.scss';
+import { Link } from 'react-router';
+import styles from './MeetingsList.scss';
 import editIcon from './editIcon.svg';
 import deleteIcon from './deleteIcon.svg';
 
@@ -13,7 +14,9 @@ export const MeetList = (props) => {
                         <span className={styles.name}>{meet.name}</span>
                     </div>
                     <div className={styles.buttons}>
-                        <img className={styles.icon} src={editIcon}/>
+                        <Link className={styles.link} to={`/cal/${props.date}/edit`}>
+                            <img className={styles.icon} src={editIcon}/>
+                        </Link>
                         <img key={meet.id} className={styles.icon} src={deleteIcon}/>
                     </div>
                 </li>

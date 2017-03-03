@@ -7,10 +7,10 @@ import Create from './components/Create';
 
 export default (
     <Route component={App} path='/'>
-        <Route path="/cal" component={Calendar}>
+        <IndexRoute component={Calendar}>
             <Route path="/cal/:dateId" component={Date}/>
             <Route path="/cal/:dateId/new" component={Create}/>
             {/*<Route path="/:dateId/:meetId/edit" component={Edit}/>*/}
-        </Route>
+        </IndexRoute>
     </Route>
 );

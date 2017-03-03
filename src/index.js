@@ -6,11 +6,13 @@ import rootReducer from './rootReducer';
 import { Provider } from 'react-redux';
 import { browserHistory, Router } from 'react-router';
 import routes from './routes';
+import { persistData } from './middleware/middleware';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
     rootReducer,
-    composeEnhancers(applyMiddleware(thunk))
+    composeEnhancers(applyMiddleware(thunk, persistData))
 );
 
 ReactDOM.render(

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import meets from './reducers/meets';
+import meetings from './reducers/meetings';
 
 export default combineReducers({
-    meets
+    meetings,
 })

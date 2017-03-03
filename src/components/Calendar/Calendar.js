@@ -4,11 +4,17 @@ import DayNames from './DayNames';
 import Week from './Week';
 import arrow from './assets/arrow.svg';
 import moment from 'moment';
+import { actions } from '../../actions/actionsDate';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class Calendar extends Component {
     constructor(props) {
         super(props)
     };
+    componentDidMount() {
+        this.props.actions.getAllMeetings();
+    }
     state =  {
         month: moment().startOf("day").clone(),
         selected: moment().startOf("day"),
@@ -73,4 +79,17 @@ class Calendar extends Component {
     }
 }
 
-export default Calendar;
+const mapStateToCalendarAppProps = (state) => {
+    return {
+        meetings: state.meetings.all,
+        current: state.meetings.current,
+    }
+};
+
+const mapDispatchToCalendarAppProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    }
+}
+
+export default connect(mapStateToCalendarAppProps, mapDispatchToCalendarAppProps)(Calendar);
