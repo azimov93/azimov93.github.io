@@ -2,8 +2,9 @@ export const getMeets = (data) => {
     if (localStorage.getItem(data)) {
         return JSON.parse(localStorage.getItem(data))
     } else {
-        return {};
-    }
+        return {}
+    };
+
 };
 
 export const saveMeets = (data) => {

@@ -13,8 +13,9 @@ class Date extends Component {
         this.props.getData(this.props.data);
     };
     render() {
+        const dateId = this.props.data;
         return (
-            <div className={styles.wrap}>
+            <div key={dateId} className={styles.wrap}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>
                         {this.props.selected.format("MMMM DD")}
@@ -27,8 +28,7 @@ class Date extends Component {
                     >
                         CREATE
                     </Link>
-                    <MeetList data={this.props.meets} date={this.props.data} />
-                    {JSON.stringify(this.props.meets)}
+                    {this.props.meets[dateId] && <MeetList data={this.props.meets[dateId]}/>}
                 </div>
             </div>
         )

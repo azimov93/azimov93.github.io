@@ -6,7 +6,7 @@ import deleteIcon from './deleteIcon.svg';
 export const MeetList = (props) => {
     return(
         <ul className={styles.wrap}>
-            {props.data[props.date].map(meet =>
+            {props.data.map(meet =>
                 <li key={meet.id} className={styles.item}>
                     <div className={styles.info}>
                         <p className={styles.desc}>{meet.description}</p>
