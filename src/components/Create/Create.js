@@ -8,12 +8,25 @@ class Create extends Component {
     // componentDidMount = () => {
     //     this.props.setData()
     // };
-    state = {
-        id: this.props.data,
-        name: '',
-        description: '',
-        errors: {}
-    };
+    constructor(props) {
+        super(props);
+
+        if (!props.form.newEntry) {
+            this.state = ({
+                date: this.props.date,
+                name: props.name,
+                description: props.description,
+                errors: {}
+            });
+        } else {
+            this.state = ({
+                date: this.props.date,
+                name: '',
+                description: '',
+                errors: {}
+            });
+        }
+    }
     handleChange = (e) => {
         if (!!this.state.errors[e.target.name]) {
             let errors = Object.assign({}, this.state.errors);
@@ -30,19 +43,30 @@ class Create extends Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-
+        let meeting = {
+            date: this.state.date,
+            id: this.props.id,
+            name: this.state.name,
+            description: this.state.description
+        };
         let errors = {};
-        if ( this.state.name === '' ) errors.name = 'Participant is required';
-        if ( this.state.description === '' ) errors.description = 'Description is required';
+        if (meeting.name.length < 1 || meeting.description.length < 1) {
+            if (meeting.name.length < 1) errors.name = 'Participant is required';
+            if (meeting.description.length < 1) errors.description = 'Description is required';
+        }
         this.setState({
             errors
         });
         const isValid = Object.keys(errors).length === 0;
 
         if (isValid) {
-            const { id, name, description } = this.state;
             console.log(this.state);
-            this.props.setData({ id, name, description });
+            if (!this.props.form.newEntry) {
+                this.props.actions.updateMeeting(meeting);
+            } else {
+                this.props.actions.saveNewMeeting(meeting);
+            }
+
         }
     };
     render() {
@@ -102,5 +126,15 @@ class Create extends Component {
         )
     };
 }
+
+const mapStateToFromProps = (state) => {
+    return {
+        id: state.meetings.current.id,
+        newEntry: state.form.newEntry,
+        name: state.meetings.current.name,
+        description: state.meetings.current.description,
+        form: state.form
+    };
+};
 
 export default connect(null, { setData, getData })(Create);

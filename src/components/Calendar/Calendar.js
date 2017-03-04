@@ -90,6 +90,6 @@ const mapDispatchToCalendarAppProps = (dispatch) => {
     return {
         actions: bindActionCreators(actions, dispatch)
     }
-}
+};
 
 export default connect(mapStateToCalendarAppProps, mapDispatchToCalendarAppProps)(Calendar);

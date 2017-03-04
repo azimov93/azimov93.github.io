@@ -1,4 +1,4 @@
-import { GET_ALL_MEETINGS, UPDATE_MEETING, CREATE_MEETING, DELETE_MEETING, SET_CURRENT_MEETING } from '../actions/actionsDate';
+import { GET_ALL_MEETINGS, UPDATE_MEETING, EDIT_MEETING, CREATE_MEETING, DELETE_MEETING, SAVE_NEW_MEETING, SET_CURRENT_MEETING, TOGGLE_FORM, DISMISS_FORM } from '../actions/actionsDate';
 
 const getNextId = (lastId) => {
     return lastId + 1;
@@ -10,20 +10,21 @@ const INITIAL_MEETING_STATE = {
     current: {id: null}
 };
 
-export default function meetings(state = INITIAL_MEETING_STATE, action = {}) {
+export function meetings(state = INITIAL_MEETING_STATE, action = {}) {
     switch(action.type) {
         case GET_ALL_MEETINGS:
             let lastId = state.lastId;
+            let meetingsList = {};
             let dayId = Object.keys(action.payload.meetings.all);
             let days = dayId.map(day => {
                 let meetings = action.payload.meetings.all[day].map(meeting => {
-                    console.log(meeting);
                     lastId = getNextId(lastId);
                     meeting.id = lastId;
                     return meeting;
                 });
-                return Object.assign({}, state, {lastId: lastId}, {all: days});
+                Object.assign(meetingsList, {[day]: meetings});
             });
+            return Object.assign({}, state, {lastId: lastId}, {all: meetingsList});
         case SET_CURRENT_MEETING:
             let newCurrent = state.current.id === action.payload.id ? INITIAL_MEETING_STATE.current
                 : action.payload;
@@ -36,7 +37,7 @@ export default function meetings(state = INITIAL_MEETING_STATE, action = {}) {
                     return meeting
                 })}
             );
-        case CREATE_MEETING:
+        case SAVE_NEW_MEETING:
             let newMeeting = action.payload;
             let day = Object.keys(newMeeting)[0];
             newMeeting[day].id = getNextId(state.lastId);
@@ -50,5 +51,23 @@ export default function meetings(state = INITIAL_MEETING_STATE, action = {}) {
                 })
             });
         default: return state;
+    }
+}
+
+const INITIAL_FORM_STATE = {
+    isOpen: false,
+    newEntry: false
+};
+
+export function form(state = INITIAL_FORM_STATE, action = {}) {
+    switch (action.type) {
+        case TOGGLE_FORM:
+            return Object.assign({}, state, {isOpen: !state.isOpen});
+        case EDIT_MEETING:
+            return Object.assign({}, state, {newEntry: false});
+        case CREATE_MEETING:
+            return Object.assign({}, state, {newEntry: true});
+        default:
+            return state;
     }
 }

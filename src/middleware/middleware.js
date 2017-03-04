@@ -1,4 +1,4 @@
-import { GET_ALL_MEETINGS, UPDATE_MEETING, CREATE_MEETING, DELETE_MEETING } from '../actions/actionsDate';
+import { GET_ALL_MEETINGS, UPDATE_MEETING, SAVE_NEW_MEETING, DELETE_MEETING } from '../actions/actionsDate';
 
 export const persistData = store => next => action => {
 
@@ -23,7 +23,7 @@ export const persistData = store => next => action => {
             localStorage.setItem('calendarApp', JSON.stringify(localState));
             result = next(newAction);
             return result;
-        case CREATE_MEETING:
+        case SAVE_NEW_MEETING:
             localState.meetings.all.push(action.payload);
             localStorage.setItem('calendarApp', JSON.stringify(localState));
         case DELETE_MEETING:

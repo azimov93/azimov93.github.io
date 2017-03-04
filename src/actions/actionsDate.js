@@ -1,46 +1,36 @@
-// export const GET_MEETINGS = 'GET_MEETINGS';
-// export const SET_MEETINGS = 'SET_MEETINGS';
-// export const DELETE_MEETINGS = 'DELETE_MEETINGS';
-// export const UPDATE_MEETINGS = 'UPDATE_MEETINGS';
-//
-// export const getData = (data) => {
-//     return {
-//         type: GET_MEETINGS,
-//         data
-//     }
-// };
-//
-// export const setData = (data) => {
-//     return {
-//         type: SET_MEETINGS,
-//         data
-//     }
-// };
-//
-// export const deleteData = (data) => {
-//     return {
-//         type: DELETE_MEETINGS,
-//         data
-//     }
-// };
-//
-// export const updateData = (data) => {
-//     return {
-//         type: UPDATE_MEETINGS,
-//         data
-//     }
-// };
-
-
 export const GET_ALL_MEETINGS = 'GET_ALL_MEETINGS';
 export const EDIT_MEETING = 'EDIT_MEETING';
 export const UPDATE_MEETING = 'UPDATE_MEETING';
 export const CREATE_MEETING = 'CREATE_MEETING';
 export const DELETE_MEETING = 'DELETE_MEETING';
 export const SET_CURRENT_MEETING = 'SET_CURRENT_MEETING';
+export const SAVE_NEW_MEETING = 'SAVE_NEW_MEETING';
+
+export const TOGGLE_FORM = 'TOGGLE_FORM';
+export const DISMISS_FORM = 'DISMISS_FORM';
 
 let meetings = {
     'someDay': [
+        {
+            name: 'Omelette',
+            description: 'Some Test'
+        },
+        {
+            name: 'Omelette',
+            description: 'Some Test'
+        }
+    ],
+    'someNextDay': [
+        {
+            name: 'Omelette',
+            description: 'Some Test'
+        },
+        {
+            name: 'Omelette',
+            description: 'Some Test'
+        }
+    ],
+    'anotherDay': [
         {
             name: 'Omelette',
             description: 'Some Test'
@@ -84,10 +74,16 @@ export const actions = {
         }
     },
 
+    saveNewMeeting: (meeting) => {
+        return {
+            type: SAVE_NEW_MEETING,
+            payload: meeting
+        }
+    },
+
     createMeeting: (meeting) => {
         return {
             type: CREATE_MEETING,
-            payload: meeting
         }
     },
 
@@ -97,4 +93,9 @@ export const actions = {
             payload: meetingId
         }
     },
+    toggleForm: () => {
+        return {
+            type: TOGGLE_FORM
+        }
+    }
 };
