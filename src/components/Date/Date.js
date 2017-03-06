@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './Date.scss';
-import { Link } from 'react-router';
-import { getData } from '../../actions/actionsDate';
+import { actions } from '../../actions/actionsDate';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MeetingsList from './MeetingsList';
 
@@ -9,8 +9,23 @@ class Date extends Component {
     constructor(props) {
         super(props);
     }
-    componentDidMount = () => {
-        this.props.getData(this.props.data);
+    createMeeting = () => {
+        this.props.actions.createMeeting();
+        this.props.actions.toggleForm();
+    };
+    editMeeting = () => {
+        this.props.actions.editMeeting();
+        this.props.actions.toggleForm();
+    };
+    deleteMeeting = () => {
+        this.props.actions.editMeeting();
+    };
+    renderMeetings = () => {
+        if (!this.props.meetings[this.props.date] || this.props.meetings[this.props.date].length < 1) {
+            return( '' )
+        } else {
+            return <MeetingsList edit={this.editMeeting} delete={this.deleteMeeting} data={this.props.meetings[this.props.date]} actions={this.props.actions}/>
+        }
     };
     render() {
         const dateId = this.props.data;
@@ -20,23 +35,31 @@ class Date extends Component {
                     <h1 className={styles.title}>
                         {this.props.selected.format("MMMM DD")}
                     </h1>
-                    <Link
-                        to={`/cal/${this.props.data}/new`}
+                    <button
+                        onClick={this.createMeeting}
                         className={`${styles.button} ${styles.create}`}
                     >
                         CREATE
-                    </Link>
-                    {this.props.meets[dateId] && <MeetingsList data={this.props.meets[dateId]} date={dateId}/>}
+                    </button>
+                    {this.renderMeetings}
                 </div>
             </div>
         )
     };
 }
 
-const mapStateToProps = (state) => {
+const mapStateToDateProps = (state) => {
     return {
-        meetings: state.meetings,
+        meetings: state.meetings.all,
+        current: state.meetings.current,
+        form: state.form
     }
 };
 
-export default connect(mapStateToProps, { getData })(Date);
+const mapDispatchToDateProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    }
+};
+
+export default connect(mapStateToDateProps, mapDispatchToDateProps)(Date);

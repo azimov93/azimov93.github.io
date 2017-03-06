@@ -1,3 +1,3 @@
-import { MeetList } from './MeetingsList';
+import MeetingsList from './MeetingsList';
 
-export default MeetList;
+export default MeetingsList;

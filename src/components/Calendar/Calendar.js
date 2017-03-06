@@ -7,6 +7,8 @@ import moment from 'moment';
 import { actions } from '../../actions/actionsDate';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Date from '../Date';
+import Create from '../Create';
 
 class Calendar extends Component {
     constructor(props) {
@@ -47,13 +49,15 @@ class Calendar extends Component {
                     <DayNames />
                     {this.renderWeeks()}
                 </div>
-                {React.Children.map(this.props.children, (child) =>
-                    React.cloneElement(child,
-                    {
-                        selected: this.state.selected,
-                        data: this.state.selected.format('DDMMMYY'),
-                    }))
-                }
+                {/*{React.Children.map(this.props.children, (child) =>*/}
+                    {/*React.cloneElement(child,*/}
+                    {/*{*/}
+                        {/*selected: this.state.selected,*/}
+                        {/*date: this.state.selected.format('DDMMMYY'),*/}
+                    {/*}))*/}
+                {/*}*/}
+                <Date selected={this.state.selected} date={this.state.selected.format('DDMMMYY')}/>
+                {/*<Create date={this.state.selected.format('DDMMMYY')}/>*/}
             </div>
         );
     }

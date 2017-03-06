@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import styles from './Create.scss';
-import { setData, getData } from '../../actions/actionsDate';
-import { connect } from 'react-redux';
 import close from './assets/close.svg';
+import { actions } from '../../actions/actionsDate';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class Create extends Component {
-    // componentDidMount = () => {
-    //     this.props.setData()
-    // };
     constructor(props) {
         super(props);
 
@@ -129,12 +127,19 @@ class Create extends Component {
 
 const mapStateToFromProps = (state) => {
     return {
-        id: state.meetings.current.id,
+        date: state.meetings.all[this.state.date],
+        id: state.meetings.all[this.state.date].id,
         newEntry: state.form.newEntry,
-        name: state.meetings.current.name,
-        description: state.meetings.current.description,
+        name: state.meetings.all[this.state.date].name,
+        description: state.meetings.all[this.state.date].description,
         form: state.form
     };
 };
 
-export default connect(null, { setData, getData })(Create);
+const mapDispatchToFormProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    }
+};
+
+export default connect(mapStateToFromProps, mapDispatchToFormProps)(Create);
