@@ -1,19 +1,19 @@
-import { GET_ALL_MEETINGS, UPDATE_MEETING, EDIT_MEETING, CREATE_MEETING, DELETE_MEETING, SAVE_NEW_MEETING, SET_CURRENT_MEETING, TOGGLE_FORM, DISMISS_FORM } from '../actions/actionsDate';
+import { GET_ALL_MEETINGS, UPDATE_MEETING, DELETE_MEETING, SAVE_NEW_MEETING, SET_CURRENT_MEETING } from '../actions/actionsDate';
+
+export const INITIAL_STATE = {
+    lastId: 0,
+    all: {},
+    current: {id: null},
+};
 
 const getNextId = (lastId) => {
     return lastId + 1;
 };
 
-const INITIAL_MEETING_STATE = {
-    lastId: 0,
-    all: {},
-    current: {id: null}
-};
-
-export function meetings(state = INITIAL_MEETING_STATE, action = {}) {
+export function meetings(state = INITIAL_STATE, action = {}) {
     switch(action.type) {
         case GET_ALL_MEETINGS:
-            let lastId = state.lastId;
+            let lastId = 0;
             let meetingsList = {};
             let dayId = Object.keys(action.payload.meetings.all);
             let days = dayId.map(day => {
@@ -26,7 +26,7 @@ export function meetings(state = INITIAL_MEETING_STATE, action = {}) {
             });
             return Object.assign({}, state, {lastId: lastId}, {all: meetingsList});
         case SET_CURRENT_MEETING:
-            let newCurrent = state.current.id === action.payload.id ? INITIAL_MEETING_STATE.current
+            let newCurrent = state.current.id === action.payload.id ? INITIAL_STATE.current
                 : action.payload;
             return Object.assign({}, state, {current: newCurrent});
         case UPDATE_MEETING:
@@ -47,29 +47,16 @@ export function meetings(state = INITIAL_MEETING_STATE, action = {}) {
             return Object.assign({}, state, {all: {[day]: allMeetings}});
         case DELETE_MEETING:
             let currentDay = action.payload.day;
-            return Object.assign({}, state, {
-                all: {[currentDay]: state.all[currentDay].filter(meeting => {
-                    return meeting.id !== action.payload.id;
-                })
-            }});
+            if (state.all[currentDay].length < 2) {
+                delete state.all[currentDay];
+                return Object.assign({}, state)
+            } else {
+                return Object.assign({}, state, {
+                    all: {[currentDay]: state.all[currentDay].filter(meeting => {
+                        return meeting.id !== action.payload.id;
+                    })
+                    }});
+            }
         default: return state;
-    }
-}
-
-const INITIAL_FORM_STATE = {
-    isOpen: false,
-    newEntry: false
-};
-
-export function form(state = INITIAL_FORM_STATE, action = {}) {
-    switch (action.type) {
-        case TOGGLE_FORM:
-            return Object.assign({}, state, {isOpen: !state.isOpen});
-        case EDIT_MEETING:
-            return Object.assign({}, state, {newEntry: false});
-        case CREATE_MEETING:
-            return Object.assign({}, state, {newEntry: true});
-        default:
-            return state;
     }
 }

@@ -25,15 +25,6 @@ class Create extends Component {
             };
         }
     }
-    // componentDidMount = () => {
-    //     const el = document.getElementById('form');
-    //     el.classList.add(`${styles.shown}`);
-    // };
-    closeForm = () => {
-        const el = document.getElementById('form');
-        el.classList.remove(`${styles.shown}`);
-        this.props.actions.toggleForm();
-    };
     handleChange = (e) => {
         if (!!this.state.errors[e.target.name]) {
             let errors = Object.assign({}, this.state.errors);
@@ -50,12 +41,22 @@ class Create extends Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-        let meeting = {
-            date: this.state.date,
-            id: this.props.id,
-            name: this.state.name,
-            description: this.state.description
-        };
+        let meeting;
+        if (this.props.id === 'null') {
+            meeting = {
+                date: this.state.date,
+                id: this.props.noNullID + 1,
+                name: this.state.name,
+                description: this.state.description
+            };
+        } else {
+            meeting = {
+                date: this.state.date,
+                id: this.props.id,
+                name: this.state.name,
+                description: this.state.description
+            };
+        }
         let errors = {};
         if (meeting.name.length < 1 || meeting.description.length < 1) {
             if (meeting.name.length < 1) errors.name = 'Participant is required';
@@ -69,20 +70,22 @@ class Create extends Component {
         if (isValid) {
             if (!this.props.form.newEntry) {
                 this.props.actions.updateMeeting(meeting);
+                this.props.actions.toggleForm();
             } else {
                 this.props.actions.saveNewMeeting(meeting);
+                this.props.actions.toggleForm();
             }
-            this.closeForm();
         }
+        this.props.actions.getAllMeetings();
     };
     render() {
         return (
             <div id='form' className={styles.wrap}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>
-                        New meeting on {this.props.selected}
+                        { this.props.form.newEntry ? `New meeting on ${this.props.selected}` : `Edit meeting on ${this.props.selected}`}
                     </h1>
-                    <img className={styles.close} src={close} />
+                    <img className={styles.close} src={close} onClick={this.props.actions.toggleForm} />
                 </div>
                 <div className={styles.layout}>
                     <form className={styles.form} onSubmit={this.handleSubmit}>
@@ -112,7 +115,7 @@ class Create extends Component {
                         </div>
                         <div className={styles.buttons}>
                             <button
-                                type='reset'
+                                onClick={this.props.actions.toggleForm}
                                 name='cancel'
                                 className={`${styles.button} ${styles.cancel}`}
                             >
@@ -137,6 +140,7 @@ const mapStateToFromProps = (state) => {
     return {
         date: state.meetings.current.date,
         id: state.meetings.current.id,
+        noNullID: state.meetings.lastId,
         newEntry: state.form.newEntry,
         name: state.meetings.current.name,
         description: state.meetings.current.description,

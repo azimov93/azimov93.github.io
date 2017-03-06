@@ -6,7 +6,9 @@ import settings from './assets/settings.svg';
 import logout from './assets/logout.svg';
 import list from './assets/list.svg';
 import person from './assets/person.svg';
-
+import { connect } from 'react-redux';
+import { actions } from '../../actions/actionsDate';
+import { bindActionCreators } from 'redux';
 
 class UserBar extends Component{
     state = {
@@ -23,6 +25,9 @@ class UserBar extends Component{
             }
         ]
     };
+    componentDidMount = () => {
+        this.props.actions.getAllMeetings();
+    };
     render() {
         return(
             <div className={styles.wrap}>
@@ -37,10 +42,22 @@ class UserBar extends Component{
                         <img className={styles.icon} src={logout}/>
                     </div>
                 </div>
-                <Items item={this.state.links}/>
+                <Items item={this.state.links} count={this.props.meetings.lastId}/>
             </div>
         )
     }
+}
+
+const mapStateToAppProps = (state) => {
+    return {
+        meetings: state.meetings,
+    }
 };
 
-export default UserBar;
+const mapDispatchToAppProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    }
+};
+
+export default connect(mapStateToAppProps, mapDispatchToAppProps)(UserBar);

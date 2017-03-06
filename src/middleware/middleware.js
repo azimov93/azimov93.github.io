@@ -33,14 +33,17 @@ export const persistData = store => next => action => {
             break;
         case DELETE_MEETING:
             let dayId = action.payload.day;
-            console.log(localState);
-            localState.meetings.all[dayId] = localState.meetings.all[dayId].filter((meeting, index) => {
-                return (index + 1) !== action.payload.id;
-            });
+            if (localState.meetings.all[dayId].length < 2) {
+                delete localState.meetings.all[dayId]
+            } else {
+                localState.meetings.all[dayId] = localState.meetings.all[dayId].filter((meeting, index) => {
+                    return (index + 1) !== action.payload.id;
+                });
+            }
             localStorage.setItem('calendarApp', JSON.stringify(localState));
             break;
         case UPDATE_MEETING:
-            let current = action.payload.day;
+            let current = action.payload.date;
             localState.meetings.all[current] = localState.meetings.all[current].map((meeting, index) => {
                 if (index + 1 === action.payload.id) {
                     return action.payload;
@@ -53,4 +56,4 @@ export const persistData = store => next => action => {
             result = next(action);
             return result;
     }
-}
+};

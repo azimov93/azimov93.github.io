@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { meetings, form } from './reducers/meetings';
+import { meetings } from './reducers/meetings';
+import { form } from './reducers/form';
 
 export default combineReducers({
-    meetings,
-    form
+    meetings: meetings,
+    form: form
 })

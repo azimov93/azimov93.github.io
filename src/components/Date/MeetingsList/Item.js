@@ -7,22 +7,30 @@ class Item extends Component {
     constructor(props) {
         super(props);
     }
-    // componentDidMount = () => {
-    //     this.setCurrent();
-    // };
     setCurrent = () => {
-        let currentMeeting = {
-            date: this.props.day,
-            id: this.props.id,
-            name: this.props.name,
-            description: this.props.description
-        };
+        let currentMeeting = {};
+        if (this.props.id === 'null') {
+            currentMeeting = {
+                date: this.props.day,
+                id: this.props.id,
+                name: this.props.name,
+                description: this.props.description
+            };
+        } else {
+            currentMeeting = {
+                date: this.props.day,
+                id: this.props.id,
+                name: this.props.name,
+                description: this.props.description
+            };
+        }
         this.props.actions.setCurrentMeeting(currentMeeting);
     };
     handleDelete = () => {
         if (this.props.id) {
             this.props.actions.deleteMeeting(this.props);
         }
+        this.props.actions.getAllMeetings();
     };
     render() {
         return (
@@ -32,7 +40,7 @@ class Item extends Component {
                     <span className={styles.name}>{this.props.name}</span>
                 </div>
                 <div className={styles.buttons}>
-                    <a className={styles.link} onClick={() => {this.props.editCurrent(); this.setCurrent()}}>
+                    <a className={styles.link} onClick={() => {this.setCurrent(); this.props.editCurrent()}}>
                         <img className={styles.icon} src={editIcon}/>
                     </a>
                     <a className={styles.link} onClick={this.handleDelete}>

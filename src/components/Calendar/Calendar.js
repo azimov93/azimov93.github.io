@@ -8,7 +8,6 @@ import { actions } from '../../actions/actionsDate';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Date from '../Date';
-import Create from '../Create';
 
 class Calendar extends Component {
     constructor(props) {
@@ -62,7 +61,7 @@ class Calendar extends Component {
 
 
         while (!done) {
-            weeks.push(<Week key={date.toString()} date={date.clone()} month={this.state.month} select={this.select} selected={this.state.selected} />);
+            weeks.push(<Week key={date.toString()} date={date.clone()} month={this.state.month} select={this.select} selected={this.state.selected} planned={this.props.meetings} />);
             date.add(1, "w");
             done = count++ > 2 && monthIndex !== date.month();
             monthIndex = date.month();

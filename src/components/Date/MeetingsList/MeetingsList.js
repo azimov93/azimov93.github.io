@@ -18,7 +18,6 @@ class MeetingsList extends Component{
                         description={meeting.description}
                         name={meeting.name}
                         editCurrent={this.props.edit}
-                        deleteCurrent={this.props.delete}
                         current={this.setCurrent}
                     />
                 )}

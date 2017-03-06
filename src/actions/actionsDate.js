@@ -7,7 +7,6 @@ export const SET_CURRENT_MEETING = 'SET_CURRENT_MEETING';
 export const SAVE_NEW_MEETING = 'SAVE_NEW_MEETING';
 
 export const TOGGLE_FORM = 'TOGGLE_FORM';
-export const DISMISS_FORM = 'DISMISS_FORM';
 
 let meetings = {};
 

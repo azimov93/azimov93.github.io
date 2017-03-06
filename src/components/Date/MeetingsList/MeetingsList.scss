@@ -2,14 +2,14 @@
   display: block;
   width: 100%;
   list-style-type: none;
-  margin-top: 38px;
+  margin-top: 41px;
   padding: 0;
 }
 
 .item {
   display: block;
   width: 100%;
-  padding: 15px 27px;
+  padding: 0px 27px 25px;
 }
 
 .info {
@@ -37,5 +37,9 @@
   display: inline-block;
   float: right;
   vertical-align: top;
+}
+
+.link {
+  margin-left: 14px;
 }
 
