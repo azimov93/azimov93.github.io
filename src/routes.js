@@ -6,7 +6,7 @@ import Clients from './components/Clients';
 
 export default (
     <Route component={App} path='/'>
-        <Route path="/cal" component={Calendar} />
+        <IndexRoute component={Calendar} />
         <Route path="/clients" component={Clients}/>
     </Route>
 );
