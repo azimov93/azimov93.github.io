@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styles from './Calendar.scss';
-import {Link} from 'react-router';
 
 class Week extends Component {
     render() {
@@ -21,9 +20,8 @@ class Week extends Component {
                     key={day.date.toString()}
                     className={`${styles.day}` + (day.isToday ? ` ${styles.today}` : ``) + (day.isCurrentMonth ? `` : ` ${styles.diffMonth}`) + (day.date.isSame(this.props.selected) ? ` ${styles.selected}` : ``)}
                     onClick={this.props.select.bind(null, day)}
-                ><Link className={styles.link} to={`/cal/${date.format('DDMMMYY')}`}>
+                >
                     {day.number}
-                </Link>
                 </span>);
             date = date.clone();
             date.add(1, "d");

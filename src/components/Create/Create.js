@@ -9,22 +9,31 @@ class Create extends Component {
     constructor(props) {
         super(props);
 
-        if (!props.form.newEntry) {
-            this.state = ({
-                date: this.props.date,
-                name: props.name,
-                description: props.description,
+        if (!this.props.form.newEntry) {
+            this.state = {
+                date: this.props.day,
+                name: this.props.name,
+                description: this.props.description,
                 errors: {}
-            });
+            };
         } else {
-            this.state = ({
-                date: this.props.date,
+            this.state = {
+                date: this.props.day,
                 name: '',
                 description: '',
                 errors: {}
-            });
+            };
         }
     }
+    // componentDidMount = () => {
+    //     const el = document.getElementById('form');
+    //     el.classList.add(`${styles.shown}`);
+    // };
+    closeForm = () => {
+        const el = document.getElementById('form');
+        el.classList.remove(`${styles.shown}`);
+        this.props.actions.toggleForm();
+    };
     handleChange = (e) => {
         if (!!this.state.errors[e.target.name]) {
             let errors = Object.assign({}, this.state.errors);
@@ -58,21 +67,20 @@ class Create extends Component {
         const isValid = Object.keys(errors).length === 0;
 
         if (isValid) {
-            console.log(this.state);
             if (!this.props.form.newEntry) {
                 this.props.actions.updateMeeting(meeting);
             } else {
                 this.props.actions.saveNewMeeting(meeting);
             }
-
+            this.closeForm();
         }
     };
     render() {
         return (
-            <div className={styles.wrap}>
+            <div id='form' className={styles.wrap}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>
-                        New meeting on {this.props.selected.format('MMMM DD')}
+                        New meeting on {this.props.selected}
                     </h1>
                     <img className={styles.close} src={close} />
                 </div>
@@ -85,7 +93,7 @@ class Create extends Component {
                             <input
                                 className={`${styles.input}` + (this.state.errors.name ? ` ${styles.error}` : ``)}
                                 name='name'
-                                value={this.state.value}
+                                value={this.state.name}
                                 onChange={this.handleChange}
                                 placeholder='Name' />
                             { this.state.errors.name && <span className={styles.errorMessage}>{this.state.errors.name}</span> }
@@ -97,7 +105,7 @@ class Create extends Component {
                             <textarea
                                 className={`${styles.message}` + (this.state.errors.description ? ` ${styles.error}` : ``)}
                                 name='description'
-                                value={this.state.value}
+                                value={this.state.description}
                                 onChange={this.handleChange}
                                 placeholder='Meeting description' />
                             { this.state.errors.description && <span className={styles.errorMessage}>{this.state.errors.description}</span> }
@@ -127,11 +135,11 @@ class Create extends Component {
 
 const mapStateToFromProps = (state) => {
     return {
-        date: state.meetings.all[this.state.date],
-        id: state.meetings.all[this.state.date].id,
+        date: state.meetings.current.date,
+        id: state.meetings.current.id,
         newEntry: state.form.newEntry,
-        name: state.meetings.all[this.state.date].name,
-        description: state.meetings.all[this.state.date].description,
+        name: state.meetings.current.name,
+        description: state.meetings.current.description,
         form: state.form
     };
 };

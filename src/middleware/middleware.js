@@ -9,7 +9,7 @@ export const persistData = store => next => action => {
     }
     else {
         let all = action.payload;
-        let meetingState = { all: all};
+        let meetingState = { all: all };
         localState = Object.assign({}, {meetings: meetingState});
     }
 
@@ -24,21 +24,31 @@ export const persistData = store => next => action => {
             result = next(newAction);
             return result;
         case SAVE_NEW_MEETING:
-            localState.meetings.all.push(action.payload);
+            let day = action.payload.date;
+            if (!localState.meetings.all[day]) {
+                Object.assign(localState.meetings.all, {[day]: []});
+            }
+            localState.meetings.all[day] = [...localState.meetings.all[day], action.payload];
             localStorage.setItem('calendarApp', JSON.stringify(localState));
+            break;
         case DELETE_MEETING:
-            localState.meetings.all = localState.meetings.all.filter((meeting, index) => {
-                return (index + 1) !== action.payload;
+            let dayId = action.payload.day;
+            console.log(localState);
+            localState.meetings.all[dayId] = localState.meetings.all[dayId].filter((meeting, index) => {
+                return (index + 1) !== action.payload.id;
             });
             localStorage.setItem('calendarApp', JSON.stringify(localState));
+            break;
         case UPDATE_MEETING:
-            localState.meetings.all = localState.meetings.all.map((meeting, index) => {
+            let current = action.payload.day;
+            localState.meetings.all[current] = localState.meetings.all[current].map((meeting, index) => {
                 if (index + 1 === action.payload.id) {
                     return action.payload;
                 }
                 return meeting;
             });
             localStorage.setItem('calendarApp', JSON.stringify(localState));
+            break;
         default:
             result = next(action);
             return result;

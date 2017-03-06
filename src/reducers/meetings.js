@@ -30,26 +30,28 @@ export function meetings(state = INITIAL_MEETING_STATE, action = {}) {
                 : action.payload;
             return Object.assign({}, state, {current: newCurrent});
         case UPDATE_MEETING:
-            return Object.assign({}, state, {current: action.payload}, {all: state.all.map(meeting => {
+            let current = action.payload.day;
+            return Object.assign({}, state, {current: action.payload}, {all: {[current]: state.all[current].map(meeting => {
                     if (meeting.id === action.payload.id) {
                         return action.payload;
                     }
                     return meeting
-                })}
+                })}}
             );
         case SAVE_NEW_MEETING:
             let newMeeting = action.payload;
-            let day = Object.keys(newMeeting)[0];
-            newMeeting[day].id = getNextId(state.lastId);
+            let day = newMeeting.date;
+            newMeeting.id = getNextId(state.lastId);
             let allMeetings = state.all[day];
             allMeetings.push(newMeeting);
             return Object.assign({}, state, {all: {[day]: allMeetings}});
         case DELETE_MEETING:
+            let currentDay = action.payload.day;
             return Object.assign({}, state, {
-                all: state.all.filter(meeting => {
-                    return meeting.id !== action.payload;
+                all: {[currentDay]: state.all[currentDay].filter(meeting => {
+                    return meeting.id !== action.payload.id;
                 })
-            });
+            }});
         default: return state;
     }
 }

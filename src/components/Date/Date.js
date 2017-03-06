@@ -4,6 +4,7 @@ import { actions } from '../../actions/actionsDate';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MeetingsList from './MeetingsList';
+import Create from '../Create';
 
 class Date extends Component {
     constructor(props) {
@@ -17,32 +18,34 @@ class Date extends Component {
         this.props.actions.editMeeting();
         this.props.actions.toggleForm();
     };
-    deleteMeeting = () => {
-        this.props.actions.editMeeting();
-    };
     renderMeetings = () => {
         if (!this.props.meetings[this.props.date] || this.props.meetings[this.props.date].length < 1) {
             return( '' )
         } else {
-            return <MeetingsList edit={this.editMeeting} delete={this.deleteMeeting} data={this.props.meetings[this.props.date]} actions={this.props.actions}/>
+            return <MeetingsList edit={this.editMeeting} delete={this.deleteMeeting} date={this.props.date} data={this.props.meetings[this.props.date]} actions={this.props.actions}/>
         }
     };
     render() {
         const dateId = this.props.data;
         return (
             <div key={dateId} className={styles.wrap}>
-                <div className={styles.header}>
-                    <h1 className={styles.title}>
-                        {this.props.selected.format("MMMM DD")}
-                    </h1>
-                    <button
-                        onClick={this.createMeeting}
-                        className={`${styles.button} ${styles.create}`}
-                    >
-                        CREATE
-                    </button>
-                    {this.renderMeetings}
-                </div>
+                {
+                    this.props.form.isOpen ?
+                        <Create day={this.props.date} selected={this.props.selected.format("MMMM DD")}/>
+                        :
+                        <div className={styles.header}>
+                            <h1 className={styles.title}>
+                                {this.props.selected.format("MMMM DD")}
+                            </h1>
+                            <button
+                                onClick={this.createMeeting}
+                                className={`${styles.button} ${styles.create}`}
+                            >
+                                CREATE
+                            </button>
+                            {this.renderMeetings()}
+                        </div>
+                }
             </div>
         )
     };

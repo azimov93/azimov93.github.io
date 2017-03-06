@@ -9,38 +9,7 @@ export const SAVE_NEW_MEETING = 'SAVE_NEW_MEETING';
 export const TOGGLE_FORM = 'TOGGLE_FORM';
 export const DISMISS_FORM = 'DISMISS_FORM';
 
-let meetings = {
-    'someDay': [
-        {
-            name: 'Omelette',
-            description: 'Some Test'
-        },
-        {
-            name: 'Omelette',
-            description: 'Some Test'
-        }
-    ],
-    'someNextDay': [
-        {
-            name: 'Omelette',
-            description: 'Some Test'
-        },
-        {
-            name: 'Omelette',
-            description: 'Some Test'
-        }
-    ],
-    'anotherDay': [
-        {
-            name: 'Omelette',
-            description: 'Some Test'
-        },
-        {
-            name: 'Omelette',
-            description: 'Some Test'
-        }
-    ]
-};
+let meetings = {};
 
 export const actions = {
     getAllMeetings: () => {
@@ -81,16 +50,16 @@ export const actions = {
         }
     },
 
-    createMeeting: (meeting) => {
+    createMeeting: () => {
         return {
             type: CREATE_MEETING,
         }
     },
 
-    deleteMeeting: (meetingId) => {
+    deleteMeeting: (meeting) => {
         return {
             type: DELETE_MEETING,
-            payload: meetingId
+            payload: meeting
         }
     },
     toggleForm: () => {
